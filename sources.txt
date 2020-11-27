@@ -36,7 +36,8 @@ https://www.codementor.io/@mattthommes/trigger-local-python-app-remotely-117wunb
 https://gist.github.com/ebergam/668c5e150fe8427adc28a432a7401339
 https://ngrok.com/
 https://stackoverflow.com/questions/53926728/is-there-a-mechanism-to-trigger-a-python-script-to-update-the-google-spreadsheet
-
+https://towardsdatascience.com/using-r-and-python-in-google-sheets-formulas-b397b302098
 https://stackoverflow.com/questions/59614941/python-facebookchat-attributeerror-str-object-has-no-attribute-to-send-data
 https://stackoverflow.com/questions/3393612/run-certain-code-every-n-seconds
 https://stackoverflow.com/questions/474528/what-is-the-best-way-to-repeatedly-execute-a-function-every-x-seconds
+https://developers.google.com/sheets/api/reference/rest?authuser=3
