@@ -98,15 +98,13 @@ __Prepare Python:__
 * __Future addition:__ There is currently no way to respond to the SMS messages in Messenger, but there is currently a workflow set up for this to be added in the future. As previously described, there is an IFTTT applet set up for reading from the outbox sheet and sending those messages. The `handle_outbox` function in textsender.py has yet to be implemented, but this sending functionality should work once it is. The main barrier is coming up with an intuitive and user-friendly way to specify which person to reply to, since the Messenger bot is used for all incoming and outgoing SMS messages.
 
 # Works cited
-**INCOMPLETE**
-
 These are the sources used for all code that was copied and/or adapted. While some snippets were directly copied from external sources, the application-level structure and logic of this program is original.
 https://www.geeksforgeeks.org/send-message-to-fb-friend-using-python/ - basis for `send()` function
-https://gspread.readthedocs.io/en/latest/user-guide.html#getting-all-values-from-a-row-or-a-column
-https://stackoverflow.com/questions/3393612/run-certain-code-every-n-seconds
+https://gspread.readthedocs.io/en/latest/user-guide.html#getting-all-values-from-a-row-or-a-column - for part of `handle_sheet()` function
+https://stackoverflow.com/questions/3393612/run-certain-code-every-n-seconds - for Threading part of `loop()` function
 https://www.analyticsvidhya.com/blog/2020/07/read-and-update-google-spreadsheets-with-python/ - basis for `main()` function
 
-Note that many more sources were referenced for finding syntax for specific functions or single lines of code (such as the `readline` and `open_by_url` functions), reading documentation, debugging, researching error messages, and troubleshooting IFTTT/other relevant software. These sources (on the order of hundreds) certainly deserve a mention, but I believe that the knowledge gained from them has been applied in such a way that explicit citations would be too verbose.
+Note that many more sources were referenced for finding syntax for specific functions or single lines of code (such as the `readline` and `open_by_url` functions), reading documentation (such as a lot of the Google Sheets API documentation), debugging, researching error messages, and troubleshooting IFTTT/other relevant software. These sources (on the order of hundreds) certainly deserve a mention, but I believe that the knowledge gained from them has been applied in such a way that explicit citations would be too verbose.
 
 # Acknowledgements
 This repo started as a project for AMS 343: Privacy, Publicity, and the Text Message - a Princeton University undergraduate course taught by Professor Grant Wythoff. Thank you, Prof. Wythoff for your enthusiasm and support throughout the semester! Another special shoutout to Hien Pham for helping test my code and giving me advice on how to better format this README.
