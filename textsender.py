@@ -5,7 +5,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 from get_credentials import get_credentials
 from time import sleep
 
-SENDER_EMAIL, SENDER_PASSWORD, RECEIVER, INBOX_SHEET, OUTBOX_SHEET = get_credentials()
+RECEIVER, SENDER_EMAIL, SENDER_PASSWORD, INBOX_SHEET, OUTBOX_SHEET = get_credentials()
 
 def send(message):
 	client = fbchat.Client(SENDER_EMAIL, SENDER_PASSWORD)
@@ -14,6 +14,7 @@ def send(message):
 		print("Message sent successfully!")
 	else:
 		print("Oh my lord, something went wrong.")
+
 
 def handle_sheet(sheet):
 	''' Return list of messages and delete corresponding rows in sheet
@@ -38,8 +39,10 @@ def handle_sheet(sheet):
 
 	return messages
 
+
 def handle_outbox(sheet):
 	pass
+
 
 def loop(sheet_in, sheet_out):
 	''' Called every 5 seconds to handle input and output sheets.
@@ -48,18 +51,15 @@ def loop(sheet_in, sheet_out):
 
 	threading.Timer(5.0, loop, args=[sheet_in, sheet_out]).start()
 
-	try:
-		messages = handle_sheet(sheet_in)
-		for message in messages:
-			message = message.split("///", 3)
-		
-			message_string = message[1] if len(message[2]) == 0 else message[2]
-			message_string += ": " + message[3]
-			send(message_string)
+	messages = handle_sheet(sheet_in)
+	for message in messages:
+		message = message.split("///", 3)
+	
+		message_string = message[1] if len(message[2]) == 0 else message[2]
+		message_string += ": " + message[3]
+		send(message_string)
 
-		outbox = handle_outbox(sheet_out)
-	except Exception as e:
-		pass
+	outbox = handle_outbox(sheet_out)
 
 
 def main():
@@ -79,7 +79,6 @@ def main():
 		loop(sheet_in, sheet_out)
 	
 	except Exception as e:
-		print("h")
 		sleep(5)
 		main()
 
