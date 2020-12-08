@@ -99,10 +99,10 @@ __Prepare Python:__
 
 # Works cited
 These are the sources used for all code that was copied and/or adapted. While some snippets were directly copied from external sources, the application-level structure and logic of this program is original.
-https://www.geeksforgeeks.org/send-message-to-fb-friend-using-python/ - basis for `send()` function
-https://gspread.readthedocs.io/en/latest/user-guide.html#getting-all-values-from-a-row-or-a-column - for part of `handle_sheet()` function
-https://stackoverflow.com/questions/3393612/run-certain-code-every-n-seconds - for Threading part of `loop()` function
-https://www.analyticsvidhya.com/blog/2020/07/read-and-update-google-spreadsheets-with-python/ - basis for `main()` function
+* https://www.geeksforgeeks.org/send-message-to-fb-friend-using-python/ - basis for `send()` function
+* https://gspread.readthedocs.io/en/latest/user-guide.html#getting-all-values-from-a-row-or-a-column - for part of `handle_sheet()` function
+* https://stackoverflow.com/questions/3393612/run-certain-code-every-n-seconds - for Threading part of `loop()` function
+* https://www.analyticsvidhya.com/blog/2020/07/read-and-update-google-spreadsheets-with-python/ - basis for `main()` function
 
 Note that many more sources were referenced for finding syntax for specific functions or single lines of code (such as the `readline` and `open_by_url` functions), reading documentation (such as a lot of the Google Sheets API documentation), debugging, researching error messages, and troubleshooting IFTTT/other relevant software. These sources (on the order of hundreds) certainly deserve a mention, but I believe that the knowledge gained from them has been applied in such a way that explicit citations would be too verbose.
 
