@@ -1,29 +1,51 @@
 # Introduction and rationale
-**INCOMPLETE**
 
-As human communication has moved into the electronic age, there has been an influx of new ways to communicate. People have greatly differing preferences as to which of these platforms is easiest, from standard SMS messaging, to WhatsApp, to Facebook Messenger, and plenty more. In the pastThis particular repository serves to solve a very specific set of preferences and conditions - those who use Android phones for sending and receiving SMS messages, but would prefer to receive them on Facebook Messenger. 
+As human communication has moved into the electronic age, there has been an influx of new ways to communicate. People have greatly differing preferences as to which of these platforms is easiest, from standard SMS messaging, to WhatsApp, to Facebook Messenger, and plenty more. With a motivation to get closer to the simpler times of letter writing when there were significantly less platforms to navigate, this project serves to condense two frequently used messaging platforms into one. This particular repository exists to help people with a specific set of conditions and preferences - those who use Android phones for sending and receiving SMS messages, but would prefer to receive them on Facebook Messenger. Instead of introducing yet another way to communicate with people, the goal of this project is to allow users to use a pre-existing platform to address multiple forms of communication.
+
+In working on this project, I've also become acutely aware of the various incompatibilities and difficulties that occur when combining messaging applications in this way. Long-term, I would love to see this expanded to connect as many edges as possible (such as receiving Messenger messages as texts, or receiving Google Hangouts messages on WhatsApp). This project started as a way to help people like me - I'm bad at responding to texts because I'm almost always on my computer, but I tend to check my phone only a couple times a day. However, I realize that there are other people who would like to condense their messaging platforms differently. In the far future, I hope people have the option to use whichever platform they prefer for all their messaging needs.
 
 # Set-up
 ## You will need
 * An Android device that receives SMS messages
-* A Facebook account for use on Facebook Messenger (https://messenger.com/)
-* An IFTTT account (https://ifttt.com)
-* The IFTTT app installed on your Android device (https://play.google.com/store/apps/details?id=com.ifttt.ifttt)
 * A Google account (https://accounts.google.com/)
+* The IFTTT app installed on your Android device (https://play.google.com/store/apps/details?id=com.ifttt.ifttt)
+	* Make sure to create an account and log in once you've downloaded it
+* A Facebook account for use on Facebook Messenger (https://messenger.com/)
 * Python 3.8
 	* https://www.python.org/downloads/, scroll down to "Looking for a specific release?"
 	* 3.8.6 is guaranteed to work. Future or previous versions may work as well, but are not guaranteed.
 * __Optional, but preferred:__ A second Facebook account. Facebook is known to lock accounts when there is suspicious activity (read: a chatbot sending messages on your behalf). To avoid this, it's best to have a second account.
 
 ## Steps
-__Prepare IFTTT:__
-* 
-
 __Prepare Google:__
 * 
 
+__Prepare IFTTT:__
+* Open up the IFTTT app.
+* Before we begin, there's important setting you'll need to change to avoid a bug later on.
+	* Tap your email address in the top right corner.
+	* Tap Sync options.
+	* Turn on "Run Location, Android Battery, and WiFi connections faster".
+	* You can keep "Use cellular data" on at your own risk - this applet should not be using much cellular data.
+* Next, we'll need to create an applet that adds a row to a given Google Sheet every time you receive an SMS.
+	* You can do this on the app.
+	* First, tap Create, then tap If This.
+	* Search for "SMS" and choose "Android SMS".
+	* Choose "Any new SMS received".
+	* Tap "Then That".
+	* Search for "sheets" and choose "Google Sheets".
+	* Choose "Add row to spreadsheet".
+	* Set the "Formatted row" field to say: "{{OccurredAt}}///{{FromNumber}}///{{ContactName}}///{{Text}}".
+		* Note: We are using "///" in place of "|||"; this keeps all the data in a single cell.
+	* Keep everything else the way it is and press Continue.
+	* Press continue again.
+	* Press Finish.
+* __Optional:__ You can also create a second applet which will send a text when a cell in a different spreadsheet is updated. This feature has not been implemented into the code yet, but you can get a head-start now for when it eventually is. If you do not follow these steps, you will still be able to receive SMS messages on Messenger.
+	* **INCOMPLETE** These steps are not added yet.
+
 __Prepare Facebook:__
-* 
+* __Optional:__ Open an Incognito window in your browser to do this, so you don't have to switch between Facebook accounts.
+* If you have created a second account, fbchat will not work until you've gone through the entire account creation process. When you log into your account, Facebook may ask you to fill in some details about yourself. There is not a science to this, but it's good to log in and out of your account a couple times until 
 
 __Prepare Python:__
 * In a command line, run the following commands to install the required Python packages:
@@ -32,7 +54,7 @@ __Prepare Python:__
 		* There is an odd bug with fbchat. After running this line, you'll need to navigate to the `\_state.py` file and change line 190 to: `revision = 1`. For me (a Windows user), this file is in the directory `C:\Users\Daniel Goodman\AppData\Local\Programs\Python\Python38\Lib\site-packages\fbchat\_state.py`. If you are a Windows user, it will likely be in the same place, but replace "Daniel Goodman" with your username. If you are a Mac user, try to find your Python directory and navigate through `Python38\Lib\site-packages\fbchat`.
 	* `pip install oauth2client`
 	* `pip install gspread`
-* Open and fill in the default CREDENTIALS.txt file with the proper information as follows:
+* Open and fill in the default CREDENTIALS.txt file with the proper information as follows (make sure to keep a single space after each colon):
 	* RECEIVER-ID: The numerical Facebook ID of the account where you want to receive the messages. Find this by pasting the link to your profile into this website: https://lookup-id.com/
 	* SENDER-EMAIL: The email address of your secondary Facebook account - the one you likely just made, which will send the messages.
 	* SENDER-PASSWORD: The password of your secondary Facebook account.
@@ -42,8 +64,8 @@ __Prepare Python:__
 
 
 
-Make sure to download IFTTT, go to Sync options, and turn on "Run Location, Android Battery, and WiFi connections faster"
 
+Make sure to have CLIENT-SECRET.json in the same directory.
 Make sure to share the spreadsheet with your Google Sheets API account address (likely something ending with gserviceaccount.com, such as myuser@myproject.iam.gserviceaccount.com)
 
 # Known bugs, limitations, and future additions
