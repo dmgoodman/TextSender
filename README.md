@@ -60,6 +60,7 @@ __Prepare IFTTT:__
 	* Choose __Any new SMS received__.
 	* Tap __Then That__.
 	* Search for __sheets__ and choose __Google Sheets__.
+	* You will have to click __Connect__ and authorize IFTTT to edit Google Drive files on the Google account you've been using.
 	* Choose __Add row to spreadsheet__.
 	* Set the __Formatted row__ field to say: __{{OccurredAt}}///{{FromNumber}}///{{ContactName}}///{{Text}}__.
 		* Note: We are using __///__ in place of __|||__; this keeps all the data in a single cell.
