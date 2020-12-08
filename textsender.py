@@ -3,11 +3,9 @@ import threading
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from get_credentials import get_credentials
+from time import sleep
 
-MYSELF = 100015764883289 # User id for Daniel Goodman
-RECEIVER = MYSELF # User to receive messages
-SENDER_EMAIL, SENDER_PASSWORD = get_credentials()
-RECEIVED_SHEET = "https://docs.google.com/spreadsheets/d/1pjOFuiHlovNNI4E_EELDpvy1BGpsueMTPnuxkh9oIs0/edit#gid=0"
+SENDER_EMAIL, SENDER_PASSWORD, RECEIVER, INBOX_SHEET, OUTBOX_SHEET = get_credentials()
 
 def send(message):
 	client = fbchat.Client(SENDER_EMAIL, SENDER_PASSWORD)
@@ -18,7 +16,8 @@ def send(message):
 		print("Oh my lord, something went wrong.")
 
 def handle_sheet(sheet):
-	''' Return list of messages and delete corresponding rows in sheet if sheet not empty. Else return []. '''
+	''' Return list of messages and delete corresponding rows in sheet
+		if sheet not empty. Else return []. '''
 
 	# Access values in sheet
 	all_messages = sheet.col_values(1)
@@ -39,25 +38,51 @@ def handle_sheet(sheet):
 
 	return messages
 
-def loop(sheet):
-	threading.Timer(5.0, loop, args=[sheet]).start()
+def handle_outbox(sheet):
+	pass
 
-	messages = handle_sheet(sheet)
-	for message in messages:
-		message = message.split("///", 2)
+def loop(sheet_in, sheet_out):
+	''' Called every 5 seconds to handle input and output sheets.
+		If sheet_in contains values, send those values via Messenger.
+		If Messenger contains new messages, add those to sheet_out. '''
+
+	threading.Timer(5.0, loop, args=[sheet_in, sheet_out]).start()
+
+	try:
+		messages = handle_sheet(sheet_in)
+		for message in messages:
+			message = message.split("///", 3)
+		
+			message_string = message[1] if len(message[2]) == 0 else message[2]
+			message_string += ": " + message[3]
+			send(message_string)
+
+		outbox = handle_outbox(sheet_out)
+	except Exception as e:
+		pass
+
+
+def main():
+	try:
+		# Use credentials to create a client to interact with the Google Sheets API
+		scope = ['https://spreadsheets.google.com/feeds']
+		creds = ServiceAccountCredentials.from_json_keyfile_name('CLIENT-SECRET.json', scope)
+		client = gspread.authorize(creds)
+
+		# Open Google Sheet by URL and get first worksheet
+		sheet_in = client.open_by_url(INBOX_SHEET)
+		sheet_in = sheet_in.get_worksheet(0)
+
+		sheet_out = client.open_by_url(OUTBOX_SHEET)
+		sheet_out = sheet_out.get_worksheet(0)
+
+		loop(sheet_in, sheet_out)
 	
-		message_string = message[1] + ": " + message[2]
-		send(message_string)
+	except Exception as e:
+		print("h")
+		sleep(5)
+		main()
 
 
 if __name__ == "__main__":
-	# Use creds to create a client to interact with the Google Sheets API
-	scope = ['https://spreadsheets.google.com/feeds']
-	creds = ServiceAccountCredentials.from_json_keyfile_name('CLIENT-SECRET.json', scope)
-	client = gspread.authorize(creds)
-
-	# Find a workbook by number and open the first sheet
-	sheet = client.open_by_url(RECEIVED_SHEET)
-	sheet = sheet.get_worksheet(0)
-
-	loop(sheet)
+	main()
