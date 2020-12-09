@@ -1,4 +1,0 @@
-Works Cited:
-
-https://gspread.readthedocs.io/en/latest/user-guide.html#getting-all-values-from-a-row-or-a-column
-https://stackoverflow.com/questions/3393612/run-certain-code-every-n-seconds
